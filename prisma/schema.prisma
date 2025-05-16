@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String?  @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  workouts  Workout[]
+  chatMessages    ChatMessage[]
+}
+
+model Workout {
+  id        String   @id @default(cuid())
+  date      DateTime
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  exercises Exercise[]
+
+  @@index([userId, date])
+}
+
+model Exercise {
+  id        String   @id @default(cuid())
+  name      String
+  workoutId String
+  workout   Workout   @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+  sets      Set[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workoutId])
+}
+
+model Set {
+  id        String   @id @default(cuid())
+  weight    Float
+  reps      Int
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([exerciseId])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  role      String   // "user", "assistant", "system"
+  content   String   @db.Text
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, createdAt])
+}

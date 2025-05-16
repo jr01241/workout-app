@@ -34,3 +34,18 @@ An AI-powered strength training and hypertrophy workout application that provide
 - `lib/` - Utility functions and shared code
 - `prisma/` - Database schema and migrations
 - `public/` - Static assets
+
+## Deployment
+
+The application is deployed using Vercel. To deploy:
+
+1. Push your code to a GitHub repository
+2. Connect the repository to Vercel
+3. Set the following environment variables in the Vercel dashboard:
+   - `DATABASE_URL`: Your Vercel Postgres connection string
+   - `OPENAI_API_KEY`: Your OpenAI API key
+4. Deploy the application using the Vercel dashboard or CLI
+
+## License
+
+MIT

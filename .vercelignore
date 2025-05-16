@@ -1,0 +1,17 @@
+# Ignore all files except those explicitly included
+*
+
+# Include specific files and directories
+!package.json
+!package-lock.json
+!public/
+!src/
+!prisma/
+!vercel.json
+!vercel.config.ts
+!tsconfig.json
+!next.config.js
+!postcss.config.js
+!tailwind.config.js
+!.env.local
+!.env.production.local
